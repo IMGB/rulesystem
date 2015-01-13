@@ -1,0 +1,91 @@
+package imgb.rulesystem.factory.streamfactory;
+
+
+import imgb.rulesystem.factory.streamfactory.sorter.RuleSorter;
+import imgb.rulesystem.node.list.NodeList;
+import imgb.rulesystem.rulereader.reader.RuleReader;
+import org.apache.log4j.Logger;
+import imgb.rulesystem.exception.FactoryException;
+import imgb.rulesystem.factory.nodefactory.list.ListNodeFactory;
+import imgb.rulesystem.factory.streamfactory.sorter.PriorityManager;
+import imgb.rulesystem.node.BaseNode;
+import imgb.rulesystem.rulereader.token.RuleToken;
+
+/**
+ * Created by Daniel on 2014/10/11.
+ * 通过priorityManager 创建经过排序的ListNode的stream factory
+ */
+public class SortStreamFactory extends StreamFactory {
+    private static final Logger logger = Logger.getLogger(SortStreamFactory.class);
+
+    private PriorityManager priorityManager;
+    private MapFactory mapFactory;
+    private ListNodeFactory listNodeFactory;
+
+    /**
+     * 构造函数
+     * @param priorityManager 优先级管理器
+     * @param mapFactory node的map工厂
+     * @param listNodeFactory 当前生成的NodeList的工厂
+     */
+    public SortStreamFactory(PriorityManager priorityManager, MapFactory mapFactory, ListNodeFactory listNodeFactory) {
+        this.priorityManager = priorityManager;
+        this.mapFactory = mapFactory;
+        this.listNodeFactory = listNodeFactory;
+    }
+
+    /**
+     * 通过mapFactory 获得对应持久化工厂的子节点。用以添加
+     * 如果当前的token有一个PRIORITY_KEY， 标识为当前节点的优先级信息 存储到返回list节点的PRIORITY_KEY信息中
+     * @param reader 通过reader 获得流式tokens值 然后构造出当前的节点
+     * @return
+     * @throws FactoryException
+     */
+    @Override
+    public BaseNode createNode(RuleReader reader) throws FactoryException {
+
+        Integer priorty = null;
+        RuleSorter ruleSorter = new RuleSorter(priorityManager);
+
+        while (reader.hasNext()) {
+            RuleToken nowToken = reader.getNextToken();
+            if (nowToken == null) {
+                throw new FactoryException("reader has next, bug get token is null.");
+            }
+
+            String tokenName = nowToken.getTokenName();
+
+            if (PRIORITY_KEY.equals(tokenName)) {
+                priorty = nowToken.getTokenInt();
+            }
+
+            BaseNode node = mapFactory.createNode(nowToken, reader);
+            if (node == null) {
+                logger.warn("in class "+ this.getClass() + " can not get token:" + nowToken.getTokenName()+ " session:"+
+                        nowToken.beSessionEnd() + " corresponding rule node" );
+            } else {
+                node.setNodeInfo(NODE_NAME, nowToken.getTokenName());
+                ruleSorter.addRule(node);
+            }
+
+            //判断当前的session 是否结束，并返回
+            if (nowToken.beSessionEnd()) {
+                break;
+            }
+        }
+
+        NodeList nodeList = listNodeFactory.createListNode(ruleSorter);
+
+        if (nodeList != null) {
+            if (priorty != null) {
+                nodeList.setNodeInfo(PRIORITY_KEY, priorty);
+            }
+        }
+        if(nodeList == null){
+            logger.warn("nodeList return null,ignore");
+        }
+
+
+        return nodeList;
+    }
+}
