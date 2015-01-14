@@ -4,6 +4,7 @@ package imgb.rulesystem.factory.streamfactory;
 import imgb.rulesystem.factory.nodefactory.leaf.LeafNodeFactory;
 import imgb.rulesystem.factory.streamfactory.sorter.RuleSorter;
 import imgb.rulesystem.node.list.NodeList;
+import imgb.rulesystem.rulereader.TokenException;
 import imgb.rulesystem.rulereader.reader.RuleReader;
 import org.apache.log4j.Logger;
 import imgb.rulesystem.exception.FactoryException;
@@ -25,8 +26,9 @@ public class SortStreamFactory extends StreamFactory {
 
     /**
      * 构造函数
+     *
      * @param priorityManager 优先级管理器
-     * @param mapFactory node的map工厂
+     * @param mapFactory      node的map工厂
      * @param listNodeFactory 当前生成的NodeList的工厂
      */
     public SortStreamFactory(PriorityManager priorityManager, MapFactory mapFactory, ListNodeFactory listNodeFactory) {
@@ -68,6 +70,7 @@ public class SortStreamFactory extends StreamFactory {
     /**
      * 通过mapFactory 获得对应持久化工厂的子节点。用以添加
      * 如果当前的token有一个PRIORITY_KEY， 标识为当前节点的优先级信息 存储到返回list节点的PRIORITY_KEY信息中
+     *
      * @param reader 通过reader 获得流式tokens值 然后构造出当前的节点
      * @return
      * @throws FactoryException
@@ -75,48 +78,62 @@ public class SortStreamFactory extends StreamFactory {
     @Override
     public BaseNode createNode(RuleReader reader) throws FactoryException {
 
-        Integer priorty = null;
+        Float priorty = null;
         RuleSorter ruleSorter = new RuleSorter(priorityManager);
 
-        while (reader.hasNext()) {
-            RuleToken nowToken = reader.getNextToken();
-            if (nowToken == null) {
-                throw new FactoryException("reader has next, bug get token is null.");
-            }
 
-            String tokenName = nowToken.getTokenName();
+        try {
+            while (reader.hasNext()) {
 
-            if (PRIORITY_KEY.equals(tokenName)) {
-                priorty = nowToken.getTokenInt();
-            }
+                RuleToken nowToken = reader.getNextToken();
+                if (nowToken == null) {
+                    throw new FactoryException("reader has next, bug get token is null.");
+                }
 
-            BaseNode node = mapFactory.createNode(nowToken, reader);
-            if (node == null) {
-                logger.warn("in class "+ this.getClass() + " can not get token:" + nowToken.getTokenName()+ " session:"+
-                        nowToken.beSessionEnd() + " corresponding rule node" );
-            } else {
-                node.setNodeInfo(NODE_NAME, nowToken.getTokenName());
-                ruleSorter.addRule(node);
-            }
+                String tokenName = nowToken.getTokenName();
 
-            //判断当前的session 是否结束，并返回
-            if (nowToken.beSessionEnd()) {
-                break;
+                if (PRIORITY_KEY.equals(tokenName)) {
+                    priorty = Float.valueOf(nowToken.getTokenString());
+                }
+
+                assembleRuleSorter(reader, nowToken, ruleSorter);
+
+                //判断当前的session 是否结束，并返回
+                if (nowToken.beSessionEnd()) {
+                    break;
+                }
             }
+        } catch (TokenException e) {
+            throw new FactoryException(e);
         }
 
+        return getNodelist(ruleSorter,priorty);
+    }
+
+    private void assembleRuleSorter(RuleReader reader, RuleToken nowToken,
+                                    RuleSorter ruleSorter) throws FactoryException {
+        BaseNode node = mapFactory.createNode(nowToken, reader);
+        if (node == null) {
+            logger.warn("in class " + this.getClass() + " can not get token:" + nowToken.getTokenName() + " session:" +
+                    nowToken.beSessionEnd() + " corresponding rule node");
+        } else {
+            node.setNodeInfo(NODE_NAME, nowToken.getTokenName());
+            ruleSorter.addRule(node);
+        }
+
+    }
+
+    private NodeList getNodelist(RuleSorter ruleSorter, Float priorty) {
         NodeList nodeList = listNodeFactory.createListNode(ruleSorter);
+        if (nodeList == null) {
+            logger.warn("nodeList return null,ignore");
+        }
 
         if (nodeList != null) {
             if (priorty != null) {
                 nodeList.setNodeInfo(PRIORITY_KEY, priorty);
             }
         }
-        if(nodeList == null){
-            logger.warn("nodeList return null,ignore");
-        }
-
-
         return nodeList;
     }
 }
