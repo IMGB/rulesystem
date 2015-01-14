@@ -9,6 +9,7 @@ import imgb.rulesystem.factory.nodefactory.leaf.LeafNodeFactory;
 import imgb.rulesystem.node.BaseNode;
 import imgb.rulesystem.rulereader.token.RuleToken;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -21,6 +22,10 @@ public class MapNodeFactory {
 
     public MapNodeFactory(Map<String, LeafNodeFactory> constructionMap) {
         nodeMap = constructionMap;
+    }
+
+    public MapNodeFactory() {
+        nodeMap = new HashMap<>();
     }
 
     /**
@@ -59,6 +64,20 @@ public class MapNodeFactory {
         LeafNodeFactory factory = (LeafNodeFactory) factoryObject;
         return factory.createNode(token);
 
+    }
+
+    /**
+     *
+     * @param tokenName
+     * @param leafNodeFactory
+     * @return if return null means the put action is failed
+     */
+    public MapNodeFactory put(String tokenName, LeafNodeFactory leafNodeFactory) {
+        if(tokenName == null) {
+            return null;
+        }
+        nodeMap.put(tokenName, leafNodeFactory);
+        return this;
     }
 
 }

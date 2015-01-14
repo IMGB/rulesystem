@@ -1,6 +1,7 @@
 package imgb.rulesystem.factory.streamfactory;
 
 
+import imgb.rulesystem.factory.nodefactory.leaf.LeafNodeFactory;
 import imgb.rulesystem.rulereader.reader.RuleReader;
 import org.apache.log4j.Logger;
 import imgb.rulesystem.exception.FactoryException;
@@ -8,6 +9,7 @@ import imgb.rulesystem.factory.nodefactory.MapNodeFactory;
 import imgb.rulesystem.node.BaseNode;
 import imgb.rulesystem.rulereader.token.RuleToken;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,6 +32,21 @@ public class MapFactory {
         super();
         this.streamFactoryMap = streamFactoryMap;
         this.mapNodeFactory = mapNodeFactory;
+    }
+
+    public MapFactory() {
+        streamFactoryMap = new HashMap<>();
+        mapNodeFactory = new MapNodeFactory();
+    }
+
+    protected MapFactory putStreamFactory(String tokenName, StreamFactory streamFactory) {
+        streamFactoryMap.put(tokenName, streamFactory);
+        return this;
+    }
+
+    protected MapFactory putNodeFactory(String tokenName, LeafNodeFactory nodeFactory) {
+        mapNodeFactory.put(tokenName, nodeFactory);
+        return this;
     }
 
     /**

@@ -1,6 +1,7 @@
 package imgb.rulesystem.factory.streamfactory;
 
 
+import imgb.rulesystem.factory.nodefactory.leaf.LeafNodeFactory;
 import imgb.rulesystem.factory.streamfactory.sorter.RuleSorter;
 import imgb.rulesystem.node.list.NodeList;
 import imgb.rulesystem.rulereader.reader.RuleReader;
@@ -32,6 +33,36 @@ public class SortStreamFactory extends StreamFactory {
         this.priorityManager = priorityManager;
         this.mapFactory = mapFactory;
         this.listNodeFactory = listNodeFactory;
+    }
+
+    public SortStreamFactory(ListNodeFactory listNodeFactory) {
+        this.listNodeFactory = listNodeFactory;
+        this.priorityManager = new PriorityManager();
+        this.mapFactory = new MapFactory();
+    }
+
+    public SortStreamFactory putStreamFactory(String tokenName, StreamFactory streamFactory, float priority) {
+        mapFactory.putStreamFactory(tokenName, streamFactory);
+        priorityManager.putPriority(tokenName, priority);
+        return this;
+    }
+
+    public SortStreamFactory putLeafFactory(String tokenName, LeafNodeFactory nodeFactory, float priority) {
+        mapFactory.putNodeFactory(tokenName, nodeFactory);
+        priorityManager.putPriority(tokenName, priority);
+        return this;
+    }
+
+    public SortStreamFactory putStreamFactory(String tokenName, StreamFactory streamFactory) {
+        mapFactory.putStreamFactory(tokenName, streamFactory);
+        priorityManager.putPriority(tokenName, PriorityManager.DEFAULT_PRIORITY);
+        return this;
+    }
+
+    public SortStreamFactory putLeafFactory(String tokenName, LeafNodeFactory nodeFactory) {
+        mapFactory.putNodeFactory(tokenName, nodeFactory);
+        priorityManager.putPriority(tokenName, PriorityManager.DEFAULT_PRIORITY);
+        return this;
     }
 
     /**

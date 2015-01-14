@@ -1,7 +1,7 @@
-package imgb.rulesystem.information.nodeinfo;
+package imgb.rulesystem.node.information.nodeinfo;
 
 
-import imgb.rulesystem.information.Information;
+import imgb.rulesystem.node.information.Information;
 
 /**
  * Created by ca on 8/13/14.<br>

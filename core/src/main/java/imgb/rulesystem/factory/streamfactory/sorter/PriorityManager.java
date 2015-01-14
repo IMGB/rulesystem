@@ -5,6 +5,7 @@ import imgb.rulesystem.node.BaseNode;
 import org.apache.log4j.Logger;
 import imgb.rulesystem.factory.streamfactory.StreamFactory;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -14,12 +15,12 @@ import java.util.Map;
 public class PriorityManager {
     private static final Logger logger = Logger.getLogger(Logger.class);
 
-    private static final int DEFAULT_PRIORITY = 0;
+    public static final Float DEFAULT_PRIORITY = 0f;
 
-    private Map<String, Integer> priorityMap = null;
+    private Map<String, Float> priorityMap = null;
 
 
-    public PriorityManager(Map<String, Integer> priorityMap) {
+    public PriorityManager(Map<String, Float> priorityMap) {
         this.priorityMap = priorityMap;
     }
 
@@ -28,20 +29,45 @@ public class PriorityManager {
     }
 
     /**
+     *
+     * @param tokenName
+     * @param priority if priority is null return PriorityManager without any modification
+     * @return if return null means put action is failed
+     */
+    public PriorityManager putPriority(String tokenName, Float priority) {
+        if(priorityMap == null) {
+            priorityMap = new HashMap<>();
+        }
+
+        if(tokenName == null) {
+            return null;
+        }
+
+        if(priority == null) {
+            return this;
+        }
+
+        priorityMap.put(tokenName, priority);
+        return this;
+    }
+
+
+
+    /**
      * 通过key值获得priorityMap 中所对应的key值
      * @param key
      * @return
      */
-    public Integer getPriority(String key) {
+    public Float getPriority(String key) {
         if(priorityMap == null) {
             return DEFAULT_PRIORITY;
         }
-        Integer returnInteger = priorityMap.get(key);
+        Float returnPriority = priorityMap.get(key);
 
-        if(returnInteger == null) {
+        if(returnPriority == null) {
             return DEFAULT_PRIORITY;
         }
-        return returnInteger;
+        return returnPriority;
 
     }
 
@@ -51,18 +77,18 @@ public class PriorityManager {
      *             node的StreamFactory.PRIORITY_KEY 如果都没有则返回默认优先值
      * @return
      */
-    public Integer getPriority(BaseNode node) {
+    public Float getPriority(BaseNode node) {
         if(node == null) {
             return DEFAULT_PRIORITY;
         }
         String name = (String)node.getNodeInfo(StreamFactory.NODE_NAME);
-        Integer priority = null;
+        Float priority = null;
         if(name != null && priorityMap != null){
             priority = priorityMap.get(name);
         }
 
         if(priority == null) {
-            priority = (Integer) node.getNodeInfo(StreamFactory.PRIORITY_KEY);
+            priority = (Float) node.getNodeInfo(StreamFactory.PRIORITY_KEY);
         }
 
         if(priority == null) {

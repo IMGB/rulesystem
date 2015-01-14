@@ -1,4 +1,4 @@
-package imgb.rulesystem.information;
+package imgb.rulesystem.node.information;
 
 import java.util.HashMap;
 import java.util.Map;

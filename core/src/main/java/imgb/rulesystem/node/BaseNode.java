@@ -2,7 +2,7 @@ package imgb.rulesystem.node;
 
 import imgb.rulesystem.context.Context;
 import imgb.rulesystem.node.exception.NodeExecutionException;
-import imgb.rulesystem.information.nodeinfo.NodeInfo;
+import imgb.rulesystem.node.information.nodeinfo.NodeInfo;
 import imgb.rulesystem.node.exception.InvalidJsonNodeKeyException;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonNode;

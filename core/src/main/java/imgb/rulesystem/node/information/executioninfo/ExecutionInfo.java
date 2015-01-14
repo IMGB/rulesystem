@@ -1,7 +1,7 @@
-package imgb.rulesystem.information.executioninfo;
+package imgb.rulesystem.node.information.executioninfo;
 
 
-import imgb.rulesystem.information.Information;
+import imgb.rulesystem.node.information.Information;
 
 /**
  * Created by Daniel on 2014/7/26.
