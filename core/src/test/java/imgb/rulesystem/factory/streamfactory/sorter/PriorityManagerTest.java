@@ -14,6 +14,7 @@ public class PriorityManagerTest {
     Map<String, Float> priorityMap = new HashMap<>();
     PriorityManager priorityManager = new PriorityManager(priorityMap);
     SelectorNode selectorNode = new SelectorNode();
+
     @Before
     public void before(){
         priorityMap.put("g",1f);

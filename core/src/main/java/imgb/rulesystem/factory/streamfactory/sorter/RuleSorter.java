@@ -1,6 +1,5 @@
 package imgb.rulesystem.factory.streamfactory.sorter;
 
-
 import org.apache.log4j.Logger;
 import imgb.rulesystem.node.BaseNode;
 

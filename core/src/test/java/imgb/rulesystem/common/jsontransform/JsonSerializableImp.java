@@ -1,6 +1,6 @@
 package imgb.rulesystem.common.jsontransform;
 
-import org.codehaus.jackson.JsonNode;
+import com.fasterxml.jackson.databind.JsonNode;
 import imgb.rulesystem.node.JsonSerializable;
 
 import java.io.IOException;
@@ -25,6 +25,6 @@ public class JsonSerializableImp implements JsonSerializable {
     }
 
     public Object deserializeFromJson(JsonNode jsonNode) throws Exception{
-        return OBJECT_MAPPER.readValue(jsonNode,Object.class);
+        return OBJECT_MAPPER.treeToValue(jsonNode,Object.class);
     }
 }

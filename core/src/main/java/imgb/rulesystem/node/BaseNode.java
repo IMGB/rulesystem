@@ -1,16 +1,16 @@
 package imgb.rulesystem.node;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import imgb.rulesystem.context.Context;
 import imgb.rulesystem.node.exception.NodeExecutionException;
 import imgb.rulesystem.node.information.nodeinfo.NodeInfo;
 import imgb.rulesystem.node.exception.InvalidJsonNodeKeyException;
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.JsonNode;
-import org.w3c.dom.NodeList;
+
 
 public abstract class BaseNode implements JsonSerializable {
 
-	private static final Logger logger = Logger.getLogger(NodeList.class);
+	private static final Logger logger = Logger.getLogger(BaseNode.class);
 
 	protected NodeInfo nodeInfo;
 
