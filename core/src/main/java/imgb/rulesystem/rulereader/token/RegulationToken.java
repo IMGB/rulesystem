@@ -51,13 +51,6 @@ public class RegulationToken extends RuleToken {
     /**
      * @return
      */
-    public Object getTokenObject() {
-        return null;
-    }
-
-    /**
-     * @return
-     */
     public Integer getTokenInt() {
         return Integer.valueOf(value);
     }
