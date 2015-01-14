@@ -3,6 +3,7 @@ package imgb.rulesystem.context;
 import imgb.rulesystem.context.repository.Repository;
 import imgb.rulesystem.context.repository.manager.RepositoryManager;
 import imgb.rulesystem.context.entity.Entity;
+import imgb.rulesystem.context.whiteboard.WhiteBoard;
 
 /**
  * Created by ca on 8/21/14.<br>

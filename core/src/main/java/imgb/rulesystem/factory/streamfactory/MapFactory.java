@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class MapFactory {
 
-    private static final Logger logger = Logger.getLogger(MapFactory.class);
+    private static final Logger LOGGER = Logger.getLogger(MapFactory.class);
 
     private Map<String, StreamFactory> streamFactoryMap;
     private MapNodeFactory mapNodeFactory;
