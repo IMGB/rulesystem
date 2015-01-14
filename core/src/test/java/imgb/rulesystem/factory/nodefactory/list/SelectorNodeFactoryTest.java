@@ -1,40 +1,40 @@
-package imgb.rulesystem.factory.nodefactory;
+package imgb.rulesystem.factory.nodefactory.list;
 
-import imgb.rulesystem.factory.nodefactory.list.SequenceNodeFactory;
-import imgb.rulesystem.factory.streamfactory.sorter.RuleSorter;
+import imgb.rulesystem.factory.nodefactory.list.SelectorNodeFactory;
 import imgb.rulesystem.node.list.NodeList;
-import imgb.rulesystem.node.list.SequenceNode;
 import org.junit.Before;
 import org.junit.Test;
 import imgb.rulesystem.factory.streamfactory.StreamFactory;
 import imgb.rulesystem.factory.streamfactory.sorter.PriorityManager;
+import imgb.rulesystem.factory.streamfactory.sorter.RuleSorter;
+import imgb.rulesystem.node.list.SelectorNode;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class SequenceNodeFactoryTest {
+public class SelectorNodeFactoryTest {
     Map<String, Float> priorityMap = new HashMap<>();
     PriorityManager priorityManager = new PriorityManager(priorityMap);
     RuleSorter ruleSorter = new RuleSorter(priorityManager);
 
-    SequenceNode sequenceNode1 = new SequenceNode();
-    SequenceNode sequenceNode2 = new SequenceNode();
+    SelectorNode selectorNode1 = new SelectorNode();
+    SelectorNode selectorNode2 = new SelectorNode();
     @Before
     public void before(){
         priorityMap.put("s",2f);
         priorityMap.put("g",1f);
-        sequenceNode1.setNodeInfo(StreamFactory.NODE_NAME,"g");
-        sequenceNode2.setNodeInfo(StreamFactory.NODE_NAME,"s");
-        ruleSorter.addRule(sequenceNode1);
-        ruleSorter.addRule(sequenceNode2);
+        selectorNode1.setNodeInfo(StreamFactory.NODE_NAME,"g");
+        selectorNode2.setNodeInfo(StreamFactory.NODE_NAME,"s");
+        ruleSorter.addRule(selectorNode1);
+        ruleSorter.addRule(selectorNode2);
     }
 
     @Test
     public void testCreateListNode() throws Exception {
-        SequenceNodeFactory sequenceNodeFactory = new SequenceNodeFactory();
-        NodeList nodeList = sequenceNodeFactory.createListNode(ruleSorter);
+        SelectorNodeFactory selectorNodeFactory = new SelectorNodeFactory();
+        NodeList nodeList = selectorNodeFactory.createListNode(ruleSorter);
         System.out.println(nodeList.getNodesCount()+nodeList.toString());
         assertNotNull(nodeList);
     }

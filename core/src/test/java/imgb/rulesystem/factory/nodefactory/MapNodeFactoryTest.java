@@ -1,4 +1,4 @@
-package imgb.rulesystem.factory.treefactory;
+package imgb.rulesystem.factory.nodefactory;
 
 import imgb.rulesystem.factory.nodefactory.MapNodeFactory;
 import imgb.rulesystem.factory.nodefactory.leaf.LeafNodeFactory;
