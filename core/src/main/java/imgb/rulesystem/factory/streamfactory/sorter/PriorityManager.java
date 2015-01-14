@@ -1,6 +1,5 @@
 package imgb.rulesystem.factory.streamfactory.sorter;
 
-
 import imgb.rulesystem.node.BaseNode;
 import org.apache.log4j.Logger;
 import imgb.rulesystem.factory.streamfactory.StreamFactory;
@@ -13,19 +12,17 @@ import java.util.Map;
  * 优先级管理器，获得节点的优先级值,默认的优先级值为0
  */
 public class PriorityManager {
-    private static final Logger logger = Logger.getLogger(Logger.class);
 
     public static final Float DEFAULT_PRIORITY = 0f;
 
     private Map<String, Float> priorityMap = null;
-
 
     public PriorityManager(Map<String, Float> priorityMap) {
         this.priorityMap = priorityMap;
     }
 
     public PriorityManager() {
-
+        this.priorityMap = new HashMap<>();
     }
 
     /**
@@ -35,9 +32,6 @@ public class PriorityManager {
      * @return if return null means put action is failed
      */
     public PriorityManager putPriority(String tokenName, Float priority) {
-        if(priorityMap == null) {
-            priorityMap = new HashMap<>();
-        }
 
         if(tokenName == null) {
             return null;
@@ -50,7 +44,6 @@ public class PriorityManager {
         priorityMap.put(tokenName, priority);
         return this;
     }
-
 
 
     /**
