@@ -29,6 +29,7 @@ public class SelectorNodeFactoryTest {
         selectorNode2.setNodeInfo(StreamFactory.NODE_NAME,"s");
         ruleSorter.addRule(selectorNode1);
         ruleSorter.addRule(selectorNode2);
+        
     }
 
     @Test
