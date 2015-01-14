@@ -1,6 +1,5 @@
 package imgb.rulesystem.factory.streamfactory.sorter;
 
-
 import org.apache.log4j.Logger;
 import imgb.rulesystem.node.BaseNode;
 
@@ -35,7 +34,7 @@ public class RuleSorter {
             logger.warn("rule node is null, quit");
             return;
         }
-        Integer priority = priorityManager.getPriority(rootNode);
+        Float priority = priorityManager.getPriority(rootNode);
         ruleList.add(new RuleUnit(priority, rootNode));
     }
 
@@ -61,15 +60,15 @@ public class RuleSorter {
 
     class RuleUnit implements Comparable<RuleUnit> {
 
-        private int priority;
+        private float priority;
         private BaseNode node;
 
-        public RuleUnit(int priority, BaseNode node) {
+        public RuleUnit(float priority, BaseNode node) {
             this.priority = priority;
             this.node = node;
         }
 
-        public int getPriority() {
+        public float getPriority() {
             return priority;
         }
 
@@ -78,7 +77,7 @@ public class RuleSorter {
         }
 
         public int compareTo(RuleUnit unit) {
-            return unit.getPriority() - priority;
+            return (int)(unit.getPriority() - priority);
         }
     }
 }

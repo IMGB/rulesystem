@@ -1,7 +1,8 @@
 package imgb.rulesystem.node;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public interface JsonSerializable {
 	/**

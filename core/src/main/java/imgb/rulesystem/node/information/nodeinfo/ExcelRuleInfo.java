@@ -1,4 +1,4 @@
-package imgb.rulesystem.information.nodeinfo;
+package imgb.rulesystem.node.information.nodeinfo;
 
 public class ExcelRuleInfo extends RuleInfo {
 

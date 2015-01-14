@@ -1,4 +1,4 @@
-package imgb.rulesystem.information.executioninfo;
+package imgb.rulesystem.node.information.executioninfo;
 
 
 import imgb.rulesystem.node.BaseNode;

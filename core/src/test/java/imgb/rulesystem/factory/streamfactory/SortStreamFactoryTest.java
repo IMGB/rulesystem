@@ -25,13 +25,13 @@ public class SortStreamFactoryTest {
 
         MapNodeFactory mapNodeFactory = new MapNodeFactory(constructionMap);
 
-        MapFactory mapFactory = new MapFactory(new HashMap(),mapNodeFactory);
-        return  mapFactory;
+        return new MapFactory(new HashMap<>(),mapNodeFactory);
+
     }
 
     private PriorityManager getPriorityManager(){
-        Map<String, Integer> map = new HashMap<String,Integer>();
-        map.put("user",1);
+        Map<String, Float> map = new HashMap<>();
+        map.put("user",1f);
 
         PriorityManager priorityManager = new PriorityManager(map);
 

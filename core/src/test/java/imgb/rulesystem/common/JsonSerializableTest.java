@@ -1,8 +1,8 @@
 package imgb.rulesystem.common;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import imgb.rulesystem.common.jsontransform.JsonSerializableImp;
 import imgb.rulesystem.common.jsontransform.TestCustomer;
-import org.codehaus.jackson.JsonNode;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

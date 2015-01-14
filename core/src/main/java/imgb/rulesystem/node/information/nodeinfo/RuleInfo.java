@@ -1,4 +1,4 @@
-package imgb.rulesystem.information.nodeinfo;
+package imgb.rulesystem.node.information.nodeinfo;
 
 /**
  * Created by Daniel on 2014/7/26.

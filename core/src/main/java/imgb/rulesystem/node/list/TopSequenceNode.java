@@ -1,7 +1,7 @@
 package imgb.rulesystem.node.list;
 
 import imgb.rulesystem.context.Context;
-import imgb.rulesystem.information.executioninfo.NodeListReturnInfo;
+import imgb.rulesystem.node.information.executioninfo.NodeListReturnInfo;
 import imgb.rulesystem.node.BaseNode;
 import imgb.rulesystem.node.exception.NodeExecutionException;
 

@@ -11,27 +11,28 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 public class PriorityManagerTest {
-    Map<String, Integer> priorityMap = new HashMap<String,Integer>();
+    Map<String, Float> priorityMap = new HashMap<>();
     PriorityManager priorityManager = new PriorityManager(priorityMap);
     SelectorNode selectorNode = new SelectorNode();
+
     @Before
     public void before(){
-        priorityMap.put("g",1);
-        priorityMap.put("s",2);
+        priorityMap.put("g",1f);
+        priorityMap.put("s",2f);
         selectorNode.setNodeInfo(StreamFactory.NODE_NAME,"g");
     }
 
     @Test
     public void testGetPriority() throws Exception {
-        Integer priority = priorityManager.getPriority("g");
+        Float priority = priorityManager.getPriority("g");
         System.out.print(priority);
-        assertEquals(Integer.valueOf(1), priority);
+        assertEquals(Float.valueOf(1f), priority);
     }
 
     @Test
     public void testGetPriority1() throws Exception {
-        Integer priority = priorityManager.getPriority(selectorNode);
+        Float priority = priorityManager.getPriority(selectorNode);
         System.out.print(priority);
-        assertEquals(Integer.valueOf(1), priority);
+        assertEquals(Float.valueOf(1f), priority);
     }
 }

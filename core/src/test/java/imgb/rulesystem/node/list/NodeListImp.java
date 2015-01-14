@@ -1,12 +1,12 @@
 package imgb.rulesystem.node.list;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import imgb.rulesystem.node.JsonSerializable;
 import imgb.rulesystem.context.Context;
 import imgb.rulesystem.node.exception.NodeExecutionException;
 import imgb.rulesystem.node.BaseNode;
 import imgb.rulesystem.node.exception.InvalidJsonNodeKeyException;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.node.ObjectNode;
 
 /**
  * Created by is on 15/1/9.
@@ -50,7 +50,7 @@ public class NodeListImp extends BaseNode {
         ObjectNode rootNode = JsonSerializable.OBJECT_MAPPER.createObjectNode();
         ObjectNode valueJson = JsonSerializable.OBJECT_MAPPER.createObjectNode();
         rootNode.put("class", this.getClass().getName());
-        rootNode.put("value", valueJson);
+        rootNode.set("value", valueJson);
         String id = "";
         if (user != null && user.getId() != null) {
             id = user.getId().toString();

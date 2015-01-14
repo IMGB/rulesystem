@@ -15,7 +15,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 public class SelectorNodeFactoryTest {
-    Map<String, Integer> priorityMap = new HashMap<String,Integer>();
+    Map<String, Float> priorityMap = new HashMap<>();
     PriorityManager priorityManager = new PriorityManager(priorityMap);
     RuleSorter ruleSorter = new RuleSorter(priorityManager);
 
@@ -23,8 +23,8 @@ public class SelectorNodeFactoryTest {
     SelectorNode selectorNode2 = new SelectorNode();
     @Before
     public void before(){
-        priorityMap.put("s",2);
-        priorityMap.put("g",1);
+        priorityMap.put("s",2f);
+        priorityMap.put("g",1f);
         selectorNode1.setNodeInfo(StreamFactory.NODE_NAME,"g");
         selectorNode2.setNodeInfo(StreamFactory.NODE_NAME,"s");
         ruleSorter.addRule(selectorNode1);
