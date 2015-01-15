@@ -29,10 +29,6 @@ public class NullToken extends RegulationToken {
         return null;
     }
 
-    @Override
-    public Object getTokenObject() {
-        return null;
-    }
 
     @Override
     public boolean beSessionEnd() {

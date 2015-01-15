@@ -31,6 +31,9 @@ public class RegulationToken extends RuleToken {
      * @return
      */
     public String getTokenString() {
+        if(value == null) {
+            return value;
+        }
         return value.trim();
     }
 
@@ -46,13 +49,6 @@ public class RegulationToken extends RuleToken {
             returnDouble = null;
         }
         return returnDouble;
-    }
-
-    /**
-     * @return
-     */
-    public Object getTokenObject() {
-        return null;
     }
 
     /**

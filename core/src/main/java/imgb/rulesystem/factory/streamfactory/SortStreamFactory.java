@@ -77,10 +77,8 @@ public class SortStreamFactory extends StreamFactory {
      */
     @Override
     public BaseNode createNode(RuleReader reader) throws FactoryException {
-
         Float priorty = null;
         RuleSorter ruleSorter = new RuleSorter(priorityManager);
-
 
         try {
             while (reader.hasNext()) {
@@ -103,11 +101,10 @@ public class SortStreamFactory extends StreamFactory {
                     break;
                 }
             }
+            return getNodelist(ruleSorter,priorty);
         } catch (TokenException e) {
             throw new FactoryException(e);
         }
-
-        return getNodelist(ruleSorter,priorty);
     }
 
     private void assembleRuleSorter(RuleReader reader, RuleToken nowToken,
@@ -120,7 +117,6 @@ public class SortStreamFactory extends StreamFactory {
             node.setNodeInfo(NODE_NAME, nowToken.getTokenName());
             ruleSorter.addRule(node);
         }
-
     }
 
     private NodeList getNodelist(RuleSorter ruleSorter, Float priorty) {

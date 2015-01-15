@@ -7,12 +7,12 @@ public class EndToken extends RuleToken{
 
     @Override
     public String getTokenName() {
-        return null;
+        return "";
     }
 
     @Override
     public String getTokenString() {
-        return null;
+        return "session end";
     }
 
     @Override

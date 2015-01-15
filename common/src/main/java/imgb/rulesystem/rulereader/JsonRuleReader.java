@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import imgb.rulesystem.rulereader.reader.RuleReader;
-import imgb.rulesystem.rulereader.token.NullToken;
 import imgb.rulesystem.rulereader.token.RegulationToken;
 import imgb.rulesystem.rulereader.token.RuleToken;
 
@@ -16,7 +15,7 @@ import java.io.IOException;
 public class JsonRuleReader extends RuleReader{
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    private JsonToken nextToken;
+    private JsonToken nextToken = null;
 
     private JsonParser jsonParser;
 
@@ -42,11 +41,25 @@ public class JsonRuleReader extends RuleReader{
 
     @Override
     public RuleToken getNextToken() throws TokenException{
-        nextToken = null;
-        return assembleCurrentToken(jsonParser.getCurrentToken());
+
+        if(nextToken != null) {
+            nextToken = null;
+            return assembleCurrentToken(jsonParser.getCurrentToken());
+        }
+
+        try {
+            return assembleCurrentToken(jsonParser.nextToken());
+        } catch (IOException e) {
+            throw new TokenException(e);
+        }
+
     }
 
     private RuleToken assembleCurrentToken(JsonToken jsonToken) throws TokenException{
+
+        if(jsonToken == null) {
+            return null;
+        }
 
         if(jsonToken.isStructEnd()) {
             return RuleToken.END_TOKEN;
@@ -54,10 +67,19 @@ public class JsonRuleReader extends RuleReader{
 
         if(jsonToken != null) {
             try {
+                JsonToken currentToken = jsonToken;
+                if(jsonToken.equals(JsonToken.FIELD_NAME)) {
+                    currentToken = jsonParser.nextToken();
+                }
+
                 String name = jsonParser.getCurrentName();
                 String value = jsonParser.getValueAsString();
-                if (value == null) {
+                if(currentToken.isStructStart()) {
                     value = "session begin";
+                }
+
+                if(name == null) {
+                    name = "";
                 }
                 return new RegulationToken(name, value, false);
             } catch (IOException e) {
@@ -70,7 +92,7 @@ public class JsonRuleReader extends RuleReader{
 
     @Override
     public String getRuleType() {
-        return null;
+        return "json_V0.1";
     }
 
 }
