@@ -30,6 +30,5 @@ public class MapFactoryTest {
 
         System.out.println(baseNode);
         assertNotNull(baseNode);
-
     }
 }

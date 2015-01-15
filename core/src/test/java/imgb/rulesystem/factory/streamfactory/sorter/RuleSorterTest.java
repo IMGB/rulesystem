@@ -38,7 +38,6 @@ public class RuleSorterTest {
         for (BaseNode baseNode : list){
             System.out.println(priorityManager.getPriority(baseNode));
         }
-
         assertNotNull(list);
     }
 }

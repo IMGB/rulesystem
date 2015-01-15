@@ -23,6 +23,10 @@ public class MapNodeFactoryTest {
         nodeMap.put("test",userConditionFactroyForTest);
     }
 
+    /**
+     * 正常输入，返回baseNode
+     * @throws Exception
+     */
     @Test
     public void testCreateNode() throws Exception {
         BaseNode baseNode = mapNodeFactory.createNode(regulationToken);
@@ -30,10 +34,15 @@ public class MapNodeFactoryTest {
         assertNotNull(baseNode);
     }
 
-//    @Test
-//    public void testCreateNodeFromFactory() throws Exception {
-//        BaseNode baseNode = mapNodeFactory.createNodeFromFactory(mapNodeFactory, regulationToken);
-//        System.out.println(baseNode);
-//        assertNotNull(baseNode);
-//    }
+    /**
+     * 输入为空，返回为空
+     * @throws Exception
+     */
+    @Test
+    public void testCreateNodeError() throws Exception {
+        BaseNode baseNode = mapNodeFactory.createNode(null);
+        System.out.println(baseNode);
+        assertNull(baseNode);
+    }
+
 }

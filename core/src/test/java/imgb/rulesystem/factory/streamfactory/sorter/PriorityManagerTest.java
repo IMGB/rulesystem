@@ -22,6 +22,10 @@ public class PriorityManagerTest {
         selectorNode.setNodeInfo(StreamFactory.NODE_NAME,"g");
     }
 
+    /**
+     * 通过key值获得priorityMap 中所对应的key值
+     * @return
+     */
     @Test
     public void testGetPriority() throws Exception {
         Float priority = priorityManager.getPriority("g");
@@ -29,10 +33,23 @@ public class PriorityManagerTest {
         assertEquals(Float.valueOf(1f), priority);
     }
 
+
+
+    /**
+     * 通过节点获得当前节点的优先值
+     * @return
+     */
     @Test
     public void testGetPriority1() throws Exception {
         Float priority = priorityManager.getPriority(selectorNode);
         System.out.print(priority);
         assertEquals(Float.valueOf(1f), priority);
+    }
+
+    @Test
+    public void testGetPriorityError1() throws Exception {
+        Float priority = priorityManager.getPriority(new SelectorNode());
+        System.out.print(priority);
+        assertEquals(Float.valueOf(0f), priority);
     }
 }
