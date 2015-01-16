@@ -5,6 +5,7 @@ import org.junit.Test;
 import imgb.rulesystem.factory.streamfactory.StreamFactory;
 import imgb.rulesystem.node.BaseNode;
 import imgb.rulesystem.node.list.SelectorNode;
+import sun.rmi.server.Activation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +28,10 @@ public class RuleSorterTest {
         selectorNode2.setNodeInfo(StreamFactory.NODE_NAME,"s");
     }
 
+    /**
+     * 参数正确情况的排序
+     * @throws Exception
+     */
     @Test
     public void testGetSortedNodes() throws Exception {
         RuleSorter ruleSorter = new RuleSorter(priorityManager);
@@ -39,5 +44,33 @@ public class RuleSorterTest {
             System.out.println(priorityManager.getPriority(baseNode));
         }
         assertNotNull(list);
+    }
+
+    /**
+     * 参数异常情况的排序
+     * @throws Exception
+     */
+    @Test(expected = NullPointerException.class)
+    public void testGetSortedNodesException1() throws Exception {
+        RuleSorter ruleSorter = new RuleSorter(null);
+        List<BaseNode> list = new ArrayList<BaseNode>();
+
+        ruleSorter.addRule(selectorNode1);
+        ruleSorter.addRule(selectorNode2);
+        list = ruleSorter.getSortedNodes();
+        assertNull(list);
+    }
+
+    /**
+     * 参数异常情况的排序
+     * @throws Exception
+     */
+    @Test
+    public void testGetSortedNodesException2() throws Exception {
+        RuleSorter ruleSorter = new RuleSorter(null);
+
+        List<BaseNode> list = ruleSorter.getSortedNodes();
+        System.out.println(list);
+
     }
 }

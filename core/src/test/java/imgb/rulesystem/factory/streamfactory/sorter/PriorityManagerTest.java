@@ -46,9 +46,24 @@ public class PriorityManagerTest {
         assertEquals(Float.valueOf(1f), priority);
     }
 
+    /**
+     * BaseNode 为空时，返回0f
+     * @throws Exception
+     */
     @Test
     public void testGetPriorityError1() throws Exception {
         Float priority = priorityManager.getPriority(new SelectorNode());
+        System.out.print(priority);
+        assertEquals(Float.valueOf(0f), priority);
+    }
+
+    /**
+     * String 为空时，返回0f
+     * @throws Exception
+     */
+    @Test
+    public void testGetPriorityError2() throws Exception {
+        Float priority = priorityManager.getPriority("");
         System.out.print(priority);
         assertEquals(Float.valueOf(0f), priority);
     }

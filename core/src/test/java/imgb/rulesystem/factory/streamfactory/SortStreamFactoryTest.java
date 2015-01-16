@@ -38,18 +38,61 @@ public class SortStreamFactoryTest {
         return priorityManager;
     }
 
+    /**
+     * 参数正常情况
+     * @throws Exception
+     */
     @Test
     public void testCreateNode() throws Exception {
-
         SelectorNodeFactory selectorNodeFactory = new SelectorNodeFactory();
-
         SortStreamFactory sortStreamFactory = new SortStreamFactory(getPriorityManager(),getMapFactory(),selectorNodeFactory);
-
         BaseNode baseNode = sortStreamFactory.createNode(new RuleReaderImp());
-
-        System.out.println(baseNode);
-
         assertNotNull(baseNode);
+    }
 
+    /**
+     * 参数异常情况
+     * @throws Exception
+     */
+    @Test(expected = NullPointerException.class)
+    public void testCreateNodeException() throws Exception {
+        SortStreamFactory sortStreamFactory = new SortStreamFactory(null,null,null);
+        BaseNode baseNode = sortStreamFactory.createNode(new RuleReaderImp());
+        assertNull(baseNode);
+    }
+
+    /**
+     * 参数异常情况
+     * @throws Exception
+     */
+    @Test(expected = NullPointerException.class)
+    public void testCreateNodeException2() throws Exception {
+        SortStreamFactory sortStreamFactory = new SortStreamFactory(getPriorityManager(),getMapFactory(),null);
+        BaseNode baseNode = sortStreamFactory.createNode(new RuleReaderImp());
+        assertNull(baseNode);
+    }
+
+    /**
+     * 参数异常情况
+     * @throws Exception
+     */
+    @Test(expected = NullPointerException.class)
+    public void testCreateNodeException3() throws Exception {
+        SelectorNodeFactory selectorNodeFactory = new SelectorNodeFactory();
+        SortStreamFactory sortStreamFactory = new SortStreamFactory(getPriorityManager(),null,selectorNodeFactory);
+        BaseNode baseNode = sortStreamFactory.createNode(new RuleReaderImp());
+        assertNull(baseNode);
+    }
+
+    /**
+     * 参数异常情况
+     * @throws Exception
+     */
+    @Test(expected = NullPointerException.class)
+    public void testCreateNodeException4() throws Exception {
+        SelectorNodeFactory selectorNodeFactory = new SelectorNodeFactory();
+        SortStreamFactory sortStreamFactory = new SortStreamFactory(null,getMapFactory(),selectorNodeFactory);
+        BaseNode baseNode = sortStreamFactory.createNode(new RuleReaderImp());
+        assertNull(baseNode);
     }
 }

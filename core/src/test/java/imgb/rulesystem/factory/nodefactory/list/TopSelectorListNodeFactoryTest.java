@@ -29,11 +29,43 @@ public class TopSelectorListNodeFactoryTest extends TestCase {
         ruleSorter.addRule(selectorNode2);
     }
 
+    /**
+     * 参数正常情况
+     * @throws Exception
+     */
     public void testAssembleNodeList() throws Exception {
         assertNotNull(topSelectorListNodeFactory.assembleNodeList(new SelectorNode(),ruleSorter));
     }
 
+    /**
+     * 参数异常情况
+     * @throws Exception
+     */
+    public void testAssembleNodeListException1() throws Exception {
+        assertNull(topSelectorListNodeFactory.assembleNodeList(new SelectorNode(), null));
+    }
+
+    /**
+     * 参数异常情况
+     * @throws Exception
+     */
+    public void testAssembleNodeListExceptionException2() throws Exception {
+        assertNull(topSelectorListNodeFactory.assembleNodeList(null,ruleSorter));
+    }
+
+    /**
+     * 正常构造ListNode
+     * @throws Exception
+     */
     public void testCreateListNode() throws Exception {
         assertNotNull(topSelectorListNodeFactory.createListNode(ruleSorter));
+    }
+
+    /**
+     * 异常构造ListNode
+     * @throws Exception
+     */
+    public void testCreateListNodeException() throws Exception {
+        assertNull(topSelectorListNodeFactory.createListNode(null));
     }
 }

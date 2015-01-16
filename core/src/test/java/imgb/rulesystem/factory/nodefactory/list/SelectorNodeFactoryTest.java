@@ -31,11 +31,25 @@ public class SelectorNodeFactoryTest {
         ruleSorter.addRule(selectorNode2);
     }
 
+    /**
+     * 正常测试。返回Nodelist对象
+     * @throws Exception
+     */
     @Test
     public void testCreateListNode() throws Exception {
         SelectorNodeFactory selectorNodeFactory = new SelectorNodeFactory();
         NodeList nodeList = selectorNodeFactory.createListNode(ruleSorter);
-        System.out.println(nodeList.getNodesCount()+nodeList.toString());
         assertNotNull(nodeList);
+    }
+
+    /**
+     * 输入为空，返回空值。
+     * @throws Exception
+     */
+    @Test
+    public void testCreateListNodeNull() throws Exception {
+        SelectorNodeFactory selectorNodeFactory = new SelectorNodeFactory();
+        NodeList nodeList = selectorNodeFactory.createListNode(null);
+        assertNull(nodeList);
     }
 }

@@ -35,14 +35,15 @@ public class MapNodeFactoryTest {
     }
 
     /**
-     * 输入为空，返回为空
+     * 输入为null，返回null
      * @throws Exception
      */
     @Test
-    public void testCreateNodeError() throws Exception {
+    public void testCreateNodeInputNull() throws Exception {
         BaseNode baseNode = mapNodeFactory.createNode(null);
         System.out.println(baseNode);
         assertNull(baseNode);
     }
+
 
 }
